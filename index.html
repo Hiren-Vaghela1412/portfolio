@@ -61,6 +61,7 @@
     .nav-links{display:flex;align-items:center;gap:4px}
     .nav-link{padding:6px 14px;border-radius:8px;font-size:.875rem;font-weight:500;color:var(--fg-muted);transition:color .2s,background .2s}
     .nav-link:hover{color:var(--fg);background:var(--surface)}
+    .nav-link.active{color:var(--accent);background:var(--accent-glow);font-weight:600}
     .nav-right{display:flex;align-items:center;gap:8px}
     .icon-btn{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:var(--card);border:1px solid var(--border);color:var(--fg-muted);transition:all .2s}
     .icon-btn:hover{border-color:var(--accent);color:var(--accent)}
@@ -272,12 +273,12 @@
       <span class="logo-text">HV</span><span class="logo-dot">.</span>
     </button>
     <div class="nav-links">
-      <button class="nav-link" onclick="gotoSection('about')">About</button>
-      <button class="nav-link" onclick="gotoSection('skills')">Skills</button>
-      <button class="nav-link" onclick="gotoSection('projects')">Projects</button>
-      <button class="nav-link" onclick="gotoSection('services')">Services</button>
-      <button class="nav-link" onclick="gotoSection('experience')">Experience</button>
-      <button class="nav-link" onclick="gotoSection('contact')">Contact</button>
+      <button class="nav-link" data-section="about" onclick="gotoSection('about')">About</button>
+      <button class="nav-link" data-section="skills" onclick="gotoSection('skills')">Skills</button>
+      <button class="nav-link" data-section="projects" onclick="gotoSection('projects')">Projects</button>
+      <button class="nav-link" data-section="services" onclick="gotoSection('services')">Services</button>
+      <button class="nav-link" data-section="experience" onclick="gotoSection('experience')">Experience</button>
+      <button class="nav-link" data-section="contact" onclick="gotoSection('contact')">Contact</button>
     </div>
     <div class="nav-right">
       <button class="icon-btn" id="theme-btn" title="Toggle light/dark theme"></button>
@@ -286,12 +287,12 @@
   </div>
   <div class="mobile-menu" id="mobile-menu">
     <div class="mobile-menu-inner">
-      <button class="nav-link" onclick="gotoSection('about');closeMobile()">About</button>
-      <button class="nav-link" onclick="gotoSection('skills');closeMobile()">Skills</button>
-      <button class="nav-link" onclick="gotoSection('projects');closeMobile()">Projects</button>
-      <button class="nav-link" onclick="gotoSection('services');closeMobile()">Services</button>
-      <button class="nav-link" onclick="gotoSection('experience');closeMobile()">Experience</button>
-      <button class="nav-link" onclick="gotoSection('contact');closeMobile()">Contact</button>
+      <button class="nav-link" data-section="about" onclick="gotoSection('about');closeMobile()">About</button>
+      <button class="nav-link" data-section="skills" onclick="gotoSection('skills');closeMobile()">Skills</button>
+      <button class="nav-link" data-section="projects" onclick="gotoSection('projects');closeMobile()">Projects</button>
+      <button class="nav-link" data-section="services" onclick="gotoSection('services');closeMobile()">Services</button>
+      <button class="nav-link" data-section="experience" onclick="gotoSection('experience');closeMobile()">Experience</button>
+      <button class="nav-link" data-section="contact" onclick="gotoSection('contact');closeMobile()">Contact</button>
     </div>
   </div>
 </nav>
@@ -810,6 +811,38 @@ window.addEventListener("scroll", () => {
   document.getElementById("navbar").classList.toggle("scrolled", window.scrollY > 20);
   document.getElementById("back-to-top").classList.toggle("show", window.scrollY > 480);
 });
+
+// ── Active section highlight (scroll-spy) ─────────────────────────
+function setActiveNav(id) {
+  document.querySelectorAll(".nav-link").forEach(link => {
+    link.classList.toggle("active", link.dataset.section === id);
+  });
+}
+
+const SPY_SECTIONS = ["about","skills","projects","services","experience","contact"];
+const heroEl = document.querySelector(".hero-section");
+
+function updateActiveSection() {
+  const viewportMid = window.scrollY + window.innerHeight * 0.4;
+
+  // Still inside the hero — no nav link should be active
+  if (heroEl && viewportMid < heroEl.offsetTop + heroEl.offsetHeight) {
+    setActiveNav(null);
+    return;
+  }
+
+  let current = null;
+  for (const id of SPY_SECTIONS) {
+    const el = document.getElementById(id);
+    if (!el) continue;
+    if (viewportMid >= el.offsetTop) current = id;
+  }
+  setActiveNav(current);
+}
+
+window.addEventListener("scroll", updateActiveSection);
+window.addEventListener("resize", updateActiveSection);
+updateActiveSection();
 
 // ── Mobile menu ───────────────────────────────────────────────────
 let mobOpen = false;
