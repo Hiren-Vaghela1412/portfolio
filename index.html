@@ -796,7 +796,7 @@ if(!THEME_CYCLE.includes(theme)) theme = "dark";
 function applyTheme(t) {
   const dark = t === "dark";
   document.documentElement.classList.toggle("dark", dark);
-  const iconName = dark ? "moon" : "sun";
+  const iconName = dark ? "sun" : "moon";
   document.getElementById("theme-btn").innerHTML = ico(iconName, 15, 15);
 }
 
