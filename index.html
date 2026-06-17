@@ -78,7 +78,7 @@
     .btn-ghost:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-glow);transform:translateY(-2px)}
 
     /* Hero */
-    .hero-section{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 24px;overflow:hidden;padding-top: 60px }
+    .hero-section{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 24px;overflow:clip;padding-top:60px;padding-bottom:60px}
     .hero-mesh{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 60% at 20% 30%,var(--accent-glow),transparent 60%),radial-gradient(ellipse 60% 50% at 80% 70%,rgba(99,102,241,.08),transparent 60%)}
     .hero-grid{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:52px 52px;opacity:.35;-webkit-mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 20%,transparent 80%);mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 20%,transparent 80%)}
     .hero-content{position:relative;z-index:1;max-width:800px;width:100%;text-align:center;display:flex;flex-direction:column;align-items:center;gap:18px}
@@ -110,9 +110,11 @@
     .stat-chip{display:flex;flex-direction:column;align-items:center;padding:12px 20px;border-radius:var(--r-md);background:var(--card);border:1px solid var(--border);box-shadow:var(--shadow);gap:2px}
     .stat-n{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.3rem;font-weight:800;color:var(--accent);line-height:1}
     .stat-l{font-size:.68rem;color:var(--fg-subtle);font-weight:500}
-    .scroll-hint{position:absolute;bottom:0px;left:50%;transform:translateX(-50%);color:var(--fg-subtle);animation:bounce 2s infinite;transition:color .2s;background:none;border:none;cursor:pointer}
+    .scroll-hint{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);color:var(--fg-subtle);animation:bounce 2s infinite;transition:color .2s;background:none;border:none;cursor:pointer;z-index:2;display:flex;align-items:center;justify-content:center;padding:4px}
     .scroll-hint:hover{color:var(--accent)}
-    @keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+    @keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+    @media(max-width:767px){.scroll-hint{bottom:16px}}
+    @media(max-height:600px){.scroll-hint{bottom:8px}}
 
     /* Section */
     .section{padding:100px 24px}
